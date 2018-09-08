@@ -30,6 +30,10 @@ sourceSets {
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+
+    // work around broken dep
+    compile "com.github.bft-smart:library:library-master-v1.1-beta-g93fe541-124"
+
     testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
     testCompile "junit:junit:$junit_version"
 
