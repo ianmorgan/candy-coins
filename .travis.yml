@@ -1,0 +1,23 @@
+sudo: required
+
+language: java
+
+
+# From - https://docs.travis-ci.com/user/languages/java/#Projects-Using-Gradle
+before_cache:
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+  - $HOME/.gradle/caches/
+  - $HOME/.gradle/wrapper/
+
+# Make the additional deps jar for docker build -
+# should find a better way of managing this
+# before_deploy: ./gradlew depsJar stashDepsJar
+
+#deploy:
+#  provider: script
+#  script: bash buildDocker.sh
+#  on:
+#    branch: master
