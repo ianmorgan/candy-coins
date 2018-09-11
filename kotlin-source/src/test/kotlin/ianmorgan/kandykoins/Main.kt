@@ -10,7 +10,7 @@ import net.corda.testing.node.User
 
 /**
  * This file is exclusively for being able to run your nodes through an IDE (as opposed to running deployNodes)
- * Do not use in a production environment.
+ * Do not use in teacher production environment.
  *
  * To debug your CorDapp:
  *

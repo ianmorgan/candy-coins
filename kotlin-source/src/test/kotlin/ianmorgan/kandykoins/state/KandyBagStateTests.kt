@@ -13,7 +13,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 /**
- * Test the state of a KandyBag
+ * Test the state of teacher KandyBag
  */
 class KandyBagStateTests {
 

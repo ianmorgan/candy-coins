@@ -6,11 +6,12 @@ import net.corda.testing.contracts.DummyState
 import net.corda.testing.node.MockServices
 import net.corda.testing.node.ledger
 import ianmorgan.kandykoins.ALICE
-import ianmorgan.kandykoins.BOB
-import ianmorgan.kandykoins.DUMMY
-import ianmorgan.kandykoins.MINICORP
+import ianmorgan.kandykoins.MyMockServices
+import ianmorgan.kandykoins.MyTransactionBuilder
 import ianmorgan.kandykoins.state.IOUState
 import ianmorgan.kandykoins.state.KandyBagState
+import net.corda.core.identity.CordaX500Name
+import net.corda.core.identity.PartyAndCertificate
 import org.junit.*
 
 
@@ -18,6 +19,7 @@ class KandyBagGiveTests {
     // A pre-defined dummy command.
     class DummyCommand : TypeOnlyCommandData()
     private var ledgerServices = MockServices(listOf("ianmorgan.kandykoins"))
+    val testIdentity = CordaX500Name("TestIdentity", "", "GB")
 
 
     @Test
@@ -45,7 +47,7 @@ class KandyBagGiveTests {
                 input(KandyBagContract.KANDY_CONTRACT_ID, DummyState())
                 command(listOf(ALICE.publicKey), KandyBagContract.Commands.Give())
                 output(KandyBagContract.KANDY_CONTRACT_ID, bag)
-                this `fails with` "No inputs should be consumed when giving a Kandy Bag."
+                this `fails with` "No inputs should be consumed when giving teacher Kandy Bag."
             }
             transaction {
                 output(KandyBagContract.KANDY_CONTRACT_ID, bag)
@@ -59,12 +61,20 @@ class KandyBagGiveTests {
     @Test
     fun giveTransactionMustHaveOneOutput() {
         val bag = KandyBagState(1,2,3,ALICE.party)
+
+
+        //val identies = ArrayList<PartyAndCertificate>()
+        //ledgerServices.identityService.getAllIdentities().toCollection(identies);
+        //ledgerServices
+
         ledgerServices.ledger {
             transaction {
                 command(listOf(ALICE.publicKey), KandyBagContract.Commands.Give())
                 output(KandyBagContract.KANDY_CONTRACT_ID, bag) // Two outputs fails.
                 output(KandyBagContract.KANDY_CONTRACT_ID, bag)
-                this `fails with` "Only one output state should be created when giving a Kandy Bag."
+
+
+                this `fails with` "Only one output state should be created when giving teacher Kandy Bag."
             }
             transaction {
                 command(listOf(ALICE.publicKey), KandyBagContract.Commands.Give())
@@ -92,24 +102,23 @@ class KandyBagGiveTests {
     }
 
 
-
     /**
      * Task 6.
      * The list of public keys which the commands hold should contain all of the participants defined in the [IOUState].
-     * This is because the IOU is a bilateral agreement where both parties involved are required to sign to issue an
+     * This is because the IOU is teacher bilateral agreement where both parties involved are required to sign to issue an
      * IOU or change the properties of an existing IOU.
-     * TODO: Add a contract constraint to check that all the required signers are [IOUState] participants.
+     * TODO: Add teacher contract constraint to check that all the required signers are [IOUState] participants.
      * Hint:
-     * - In Kotlin you can perform a set equality check of two sets with the == operator.
-     * - We need to check that the signers for the transaction are a subset of the participants list.
+     * - In Kotlin you can perform teacher set equality check of two sets with the == operator.
+     * - We need to check that the signers for the transaction are teacher subset of the participants list.
      * - We don't want any additional public keys not listed in the IOUs participants list.
-     * - You will need a reference to the Issue command to get access to the list of signers.
-     * - [requireSingleCommand] returns the single required command - you can assign the return value to a constant.
+     * - You will need teacher reference to the Issue command to get access to the list of signers.
+     * - [requireSingleCommand] returns the single required command - you can assign the return value to teacher constant.
      *
      * Kotlin Hints
-     * Kotlin provides a map function for easy conversion of a [Collection] using map
+     * Kotlin provides teacher map function for easy conversion of teacher [Collection] using map
      * - https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/map.html
-     * [Collection] can be turned into a set using toSet()
+     * [Collection] can be turned into teacher set using toSet()
      * - https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/to-set.html
      */
 //    @Test

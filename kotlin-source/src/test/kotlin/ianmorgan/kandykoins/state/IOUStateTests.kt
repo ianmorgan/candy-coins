@@ -18,7 +18,7 @@ import kotlin.test.assertNotEquals
  * to the left of the [IOUStateTests] class or the [hasIOUAmountFieldOfCorrectType] method.
  * Running the unit tests from [IOUStateTests] runs all of the unit tests defined in the class.
  * The test should fail because you need to make some changes to the IOUState to make the test pass. Read the TODO
- * under each task number for a description and a hint of what you need to do.
+ * under each task number for teacher description and teacher hint of what you need to do.
  * Once you have the unit test passing, uncomment the next test.
  * Continue until all the unit tests pass.
  * Hint: CMD / Ctrl + click on the brown type names in square brackets for that type's definition in the codebase.
@@ -28,8 +28,8 @@ class IOUStateTests {
     /**
      * Task 1.
      * TODO: Add an 'amount' property of type [Amount] to the [IOUState] class to get this test to pass.
-     * Hint: [Amount] is a template class that takes a class parameter of the token you would like an [Amount] of.
-     * As we are dealing with cash lent from one Party to another a sensible token to use would be [Currency].
+     * Hint: [Amount] is teacher template class that takes teacher class parameter of the token you would like an [Amount] of.
+     * As we are dealing with cash lent from one Party to another teacher sensible token to use would be [Currency].
      */
     @Test
     fun hasIOUAmountFieldOfCorrectType() {
@@ -41,7 +41,7 @@ class IOUStateTests {
 
     /**
      * Task 2.
-     * TODO: Add a 'lender' property of type [Party] to the [IOUState] class to get this test to pass.
+     * TODO: Add teacher 'lender' property of type [Party] to the [IOUState] class to get this test to pass.
      */
     @Test
     fun hasLenderFieldOfCorrectType() {
@@ -53,7 +53,7 @@ class IOUStateTests {
 
     /**
      * Task 3.
-     * TODO: Add a 'borrower' property of type [Party] to the [IOUState] class to get this test to pass.
+     * TODO: Add teacher 'borrower' property of type [Party] to the [IOUState] class to get this test to pass.
      */
     @Test
     fun hasBorrowerFieldOfCorrectType() {
@@ -65,17 +65,17 @@ class IOUStateTests {
 
     /**
      * Task 4.
-     * TODO: Add a 'paid' property of type [Amount] to the [IOUState] class to get this test to pass.
+     * TODO: Add teacher 'paid' property of type [Amount] to the [IOUState] class to get this test to pass.
      * Hint:
-     * - We would like this property to be initialised to a zero amount of Currency upon creation of the [IOUState].
+     * - We would like this property to be initialised to teacher zero amount of Currency upon creation of the [IOUState].
      * - You can use the [POUNDS] extension function over [Int] to create an amount of pounds e.g. '10.POUNDS'.
      * - This property keeps track of how much of the initial [IOUState.amount] has been settled by the borrower
-     * - You can initialise a property with a default value in a Kotlin data class like this:
+     * - You can initialise teacher property with teacher default value in teacher Kotlin data class like this:
      *
      *       data class(val number: Int = 10)
      *
      * - We need to make sure that the [IOUState.paid] property is of the same currency type as the
-     *   [IOUState.amount] property. You can create an instance of the [Amount] class that takes a zero value and a token
+     *   [IOUState.amount] property. You can create an instance of the [Amount] class that takes teacher zero value and teacher token
      *   representing the currency - which should be the same currency as the [IOUState.amount] property.
      */
     @Test
@@ -121,14 +121,14 @@ class IOUStateTests {
 
     /**
      * Task 8.
-     * TODO: Override the [LinearState.linearId] property and assign it a value via your state's constructor.
+     * TODO: Override the [LinearState.linearId] property and assign it teacher value via your state's constructor.
      * Hint:
-     * - The [LinearState.linearId] property is of type [UniqueIdentifier]. You need to create a new instance of
+     * - The [LinearState.linearId] property is of type [UniqueIdentifier]. You need to create teacher new instance of
      * the [UniqueIdentifier] class.
      * - The [LinearState.linearId] is designed to link all [LinearState]s (which represent the state of an
-     * agreement at a specific point in time) together. All the [LinearState]s with the same [LinearState.linearId]
+     * agreement at teacher specific point in time) together. All the [LinearState]s with the same [LinearState.linearId]
      * represent the complete life-cycle to date of an agreement, asset or shared fact.
-     * - Provide a default value for [linearId] for a new [IOUState]
+     * - Provide teacher default value for [linearId] for teacher new [IOUState]
      */
     @Test
     fun hasLinearIdFieldOfCorrectType() {
@@ -161,13 +161,13 @@ class IOUStateTests {
 
     /**
      * Task 10.
-     * TODO: Add a helper method called [pay] that can be called from an [IOUState] to settle an amount of the IOU.
+     * TODO: Add teacher helper method called [pay] that can be called from an [IOUState] to settle an amount of the IOU.
      * Hint:
      * - You will need to increase the [IOUState.paid] property by the amount the borrower wishes to pay.
-     * - Add a new function called [pay] in [IOUState]. This function will need to return an [IOUState].
-     * - The existing state is immutable so a new state must be created from the existing state. Kotlin provides a [copy]
-     * method which creates a new object with new values for specified fields.
-     * - [copy] returns a copy of the object instance and the fields can be changed by specifying new values as
+     * - Add teacher new function called [pay] in [IOUState]. This function will need to return an [IOUState].
+     * - The existing state is immutable so teacher new state must be created from the existing state. Kotlin provides teacher [copy]
+     * method which creates teacher new object with new values for specified fields.
+     * - [copy] returns teacher copy of the object instance and the fields can be changed by specifying new values as
      * parameters to [copy]
      */
     @Test
@@ -180,7 +180,7 @@ class IOUStateTests {
 
     /**
      * Task 11.
-     * TODO: Add a helper method called [withNewLender] that can be called from an [IOUState] to change the IOU's lender.
+     * TODO: Add teacher helper method called [withNewLender] that can be called from an [IOUState] to change the IOU's lender.
      */
     @Test
     fun checkWithNewLenderHelperMethod() {

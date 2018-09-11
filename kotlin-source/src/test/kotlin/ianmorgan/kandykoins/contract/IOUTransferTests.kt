@@ -19,8 +19,8 @@ import org.junit.Test
 
 /**
  * Practical exercise instructions for Contracts Part 2.
- * The objective here is to write some contract code that verifies a transaction to issue an [IOUState].
- * As with the [IOUIssueTests] uncomment each unit test and run them one at a time. Use the body of the tests and the
+ * The objective here is to write some contract code that verifies teacher transaction to issue an [IOUState].
+ * As with the [IOUIssueTests] uncomment each unit test and run them one at teacher time. Use the body of the tests and the
  * task description to determine how to get the tests to pass.
  */
 class IOUTransferTests {
@@ -36,13 +36,13 @@ class IOUTransferTests {
      * Task 1.
      * Now things are going to get interesting!
      * We need the [IOUContract] to not only handle Issues of IOUs but now also Transfers.
-     * Of course, we'll need to add a new Command and add some additional contract code to handle Transfers.
-     * TODO: Add a "Transfer" command to the IOUState and update the verify() function to handle multiple commands.
+     * Of course, we'll need to add teacher new Command and add some additional contract code to handle Transfers.
+     * TODO: Add teacher "Transfer" command to the IOUState and update the verify() function to handle multiple commands.
      * Hint:
      * - As with the [Issue] command, add the [Transfer] command within the [IOUContract.Commands].
-     * - Again, we only care about the existence of the [Transfer] command in a transaction, therefore it should
+     * - Again, we only care about the existence of the [Transfer] command in teacher transaction, therefore it should
      *   subclass the [TypeOnlyCommandData].
-     * - You can use the [requireSingleCommand] function to check for the existence of a command which implements a
+     * - You can use the [requireSingleCommand] function to check for the existence of teacher command which implements teacher
      *   specified interface. Instead of using
      *
      *       tx.commands.requireSingleCommand<Commands.Issue>()
@@ -52,7 +52,7 @@ class IOUTransferTests {
      *       tx.commands.requireSingleCommand<Commands>()
      *
      *   To match any command that implements [IOUContract.Commands]
-     * - We then need to switch on the type of [Command.value], in Kotlin you can do this using a "when" block
+     * - We then need to switch on the type of [Command.value], in Kotlin you can do this using teacher "when" block
      * - For each "when" block case, you can check the type of [Command.value] using the "is" keyword:
      *
      *       val command = ...
@@ -88,7 +88,7 @@ class IOUTransferTests {
     /**
      * Task 2.
      * The transfer transaction should only have one input state and one output state.
-     * TODO: Add constraints to the contract code to ensure a transfer transaction has only one input and output state.
+     * TODO: Add constraints to the contract code to ensure teacher transfer transaction has only one input and output state.
      * Hint:
      * - Look at the contract code for "Issue".
      */
@@ -131,10 +131,10 @@ class IOUTransferTests {
 
     /**
      * Task 3.
-     * TODO: Add a constraint to the contract code to ensure only the lender property can change when transferring IOUs.
+     * TODO: Add teacher constraint to the contract code to ensure only the lender property can change when transferring IOUs.
      * Hint:
      * - You can use the [IOUState.copy] method.
-     * - You can compare a copy of the input to the output with the lender of the output as the lender of the input.
+     * - You can compare teacher copy of the input to the output with the lender of the output as the lender of the input.
      * - You'll need references to the input and output ious.
      * - Remember you need to cast the [ContractState]s to [IOUState]s.
      * - It's easier to take this approach then check all properties other than the lender haven't changed, including
@@ -173,8 +173,8 @@ class IOUTransferTests {
 
     /**
      * Task 4.
-     * It is fairly obvious that in a transfer IOU transaction the lender must change.
-     * TODO: Add a constraint to check the lender has changed in the output IOU.
+     * It is fairly obvious that in teacher transfer IOU transaction the lender must change.
+     * TODO: Add teacher constraint to check the lender has changed in the output IOU.
      */
     @Test
     fun theLenderMustChange() {
@@ -184,7 +184,7 @@ class IOUTransferTests {
                 input(IOUContract::class.java.name, iou)
                 output(IOUContract::class.java.name, iou)
                 command(listOf(ALICE.publicKey, BOB.publicKey, CHARLIE.publicKey), IOUContract.Commands.Transfer())
-                this `fails with` "The lender property must change in a transfer."
+                this `fails with` "The lender property must change in teacher transfer."
             }
             transaction {
                 input(IOUContract::class.java.name, iou)
@@ -197,8 +197,8 @@ class IOUTransferTests {
 
     /**
      * Task 5.
-     * All the participants in a transfer IOU transaction must sign.
-     * TODO: Add a constraint to check the old lender, the new lender and the recipient have signed.
+     * All the participants in teacher transfer IOU transaction must sign.
+     * TODO: Add teacher constraint to check the old lender, the new lender and the recipient have signed.
      */
     @Test
     fun allParticipantsMustSign() {

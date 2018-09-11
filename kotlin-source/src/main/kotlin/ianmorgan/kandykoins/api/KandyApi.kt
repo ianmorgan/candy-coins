@@ -1,5 +1,6 @@
 package ianmorgan.kandykoins.api
 
+import ianmorgan.kandykoins.flow.*
 import net.corda.core.contracts.Amount
 import net.corda.core.contracts.ContractState
 import net.corda.core.contracts.StateAndRef
@@ -14,11 +15,8 @@ import net.corda.core.node.NodeInfo
 import net.corda.core.utilities.loggerFor
 import net.corda.finance.contracts.asset.Cash
 import net.corda.finance.contracts.getCashBalances
-import ianmorgan.kandykoins.flow.IOUIssueFlow
-import ianmorgan.kandykoins.flow.IOUSettleFlow
-import ianmorgan.kandykoins.flow.IOUTransferFlow
-import ianmorgan.kandykoins.flow.SelfIssueCashFlow
 import ianmorgan.kandykoins.state.IOUState
+import ianmorgan.kandykoins.state.KandyBagState
 import org.bouncycastle.asn1.x500.X500Name
 import org.bouncycastle.asn1.x500.style.BCStyle
 import org.slf4j.Logger
@@ -35,12 +33,12 @@ import javax.ws.rs.core.Response
  * This API is accessible from /api/iou. The endpoint paths specified below are relative to it.
  * We've defined a bunch of endpoints to deal with IOUs, cash and the various operations you can perform with them.
  */
-@Path("iou")
-class IOUApi(val rpcOps: CordaRPCOps) {
+@Path("kandy")
+class KandyApi(val rpcOps: CordaRPCOps) {
     private val me = rpcOps.nodeInfo().legalIdentities.first().name
 
     companion object {
-        private val logger: Logger = loggerFor<IOUApi>()
+        private val logger: Logger = loggerFor<KandyApi>()
     }
 
     fun X500Name.toDisplayString() : String  = BCStyle.INSTANCE.toString(this)
@@ -78,11 +76,10 @@ class IOUApi(val rpcOps: CordaRPCOps) {
      * Hint - Use [rpcOps] to query the vault all unconsumed [IOUState]s
      */
     @GET
-    @Path("ious")
+    @Path("bags")
     @Produces(MediaType.APPLICATION_JSON)
-    fun getIOUs(): List<StateAndRef<ContractState>> {
-        // Filter by state type: IOU.
-        return rpcOps.vaultQueryBy<IOUState>().states
+    fun getBags(): List<StateAndRef<ContractState>> {
+        return rpcOps.vaultQueryBy<KandyBagState>().states
     }
 
     /**
@@ -111,18 +108,19 @@ class IOUApi(val rpcOps: CordaRPCOps) {
      * curl -X PUT 'http://localhost:10007/api/iou/issue-iou?amount=99&currency=GBP&party=O=ParticipantC,L=New%20York,C=US
      */
     @PUT
-    @Path("issue-iou")
-    fun issueIOU(@QueryParam(value = "amount") amount: Int,
-                 @QueryParam(value = "currency") currency: String,
-                 @QueryParam(value = "party") party: String): Response {
+    @Path("give-kandy")
+    fun issueIOU(@QueryParam(value = "chocolates") chocs: Int,
+                 @QueryParam(value = "gobstoppers") gobs: Int,
+                 @QueryParam(value = "jellybeans") beans: Int,
+                 @QueryParam(value = "owner") party: String): Response {
         // Get party objects for myself and the counterparty.
         val me = rpcOps.nodeInfo().legalIdentities.first()
-        val lender = rpcOps.wellKnownPartyFromX500Name(CordaX500Name.parse(party)) ?: throw IllegalArgumentException("Unknown party name.")
+        val owner = rpcOps.wellKnownPartyFromX500Name(CordaX500Name.parse(party)) ?: throw IllegalArgumentException("Unknown party name.")
         // Create a new IOU state using the parameters given.
         try {
-            val state = IOUState(Amount(amount.toLong() * 100, Currency.getInstance(currency)), lender, me)
+            val state = KandyBagState(chocs,gobs,beans,owner)
             // Start the IOUIssueFlow. We block and waits for the flow to return.
-            val result = rpcOps.startTrackedFlow(::IOUIssueFlow, state).returnValue.get()
+            val result = rpcOps.startTrackedFlow(::KandyBagGiveFlow, state).returnValue.get()
             // Return the response.
             return Response
                     .status(Response.Status.CREATED)

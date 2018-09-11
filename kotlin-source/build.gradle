@@ -47,7 +47,12 @@ dependencies {
     cordaRuntime "$corda_release_distribution:corda:$corda_release_version"
     cordaRuntime "$corda_release_distribution:corda-webserver:$corda_release_version"
 
-    testCompile "$corda_release_distribution:corda-test-utils:$corda_release_version"
+    testCompile ("$corda_release_distribution:corda-test-utils:$corda_release_version")
+    testCompile ("$corda_release_distribution:corda-node:$corda_release_version") {
+       // exclude group: 'net.corda', module: 'cliutils'
+    }
+
+
     testCompile "$corda_release_distribution:corda-node-driver:$corda_release_version"
 
 
@@ -88,7 +93,7 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['jar']) {
         cordapps = ["$corda_release_distribution:corda-finance:$corda_release_version"]
     }
     node {
-        name "O=ParticipantA,L=London,C=GB"
+        name "O=Teacher,L=London,C=GB"
         p2pPort 10007
         webPort 10009
         cordapps = ["$corda_release_distribution:corda-finance:$corda_release_version"]
@@ -101,7 +106,7 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['jar']) {
         rpcUsers = rpcUsersList
     }
     node {
-        name "O=ParticipantB,L=New York,C=US"
+        name "O=Alice,L=New York,C=US"
         p2pPort 10010
         webPort 10012
         cordapps = ["$corda_release_distribution:corda-finance:$corda_release_version"]
@@ -114,7 +119,7 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['jar']) {
         rpcUsers = rpcUsersList
     }
     node {
-        name "O=ParticipantC,L=Paris,C=FR"
+        name "O=Bob,L=Paris,C=FR"
         p2pPort 10013
         webPort 10015
         cordapps = ["$corda_release_distribution:corda-finance:$corda_release_version"]
