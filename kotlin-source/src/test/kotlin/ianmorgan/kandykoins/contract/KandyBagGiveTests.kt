@@ -47,7 +47,7 @@ class KandyBagGiveTests {
                 input(KandyBagContract.KANDY_CONTRACT_ID, DummyState())
                 command(listOf(ALICE.publicKey), KandyBagContract.Commands.Give())
                 output(KandyBagContract.KANDY_CONTRACT_ID, bag)
-                this `fails with` "No inputs should be consumed when giving teacher Kandy Bag."
+                this `fails with` "No inputs should be consumed when giving a Kandy Bag."
             }
             transaction {
                 output(KandyBagContract.KANDY_CONTRACT_ID, bag)
@@ -73,8 +73,7 @@ class KandyBagGiveTests {
                 output(KandyBagContract.KANDY_CONTRACT_ID, bag) // Two outputs fails.
                 output(KandyBagContract.KANDY_CONTRACT_ID, bag)
 
-
-                this `fails with` "Only one output state should be created when giving teacher Kandy Bag."
+                this `fails with` "Only one output state should be created when giving a Kandy Bag."
             }
             transaction {
                 command(listOf(ALICE.publicKey), KandyBagContract.Commands.Give())

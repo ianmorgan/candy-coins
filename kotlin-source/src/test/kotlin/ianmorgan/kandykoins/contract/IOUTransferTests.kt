@@ -184,7 +184,7 @@ class IOUTransferTests {
                 input(IOUContract::class.java.name, iou)
                 output(IOUContract::class.java.name, iou)
                 command(listOf(ALICE.publicKey, BOB.publicKey, CHARLIE.publicKey), IOUContract.Commands.Transfer())
-                this `fails with` "The lender property must change in teacher transfer."
+                this `fails with` "The lender property must change in a transfer."
             }
             transaction {
                 input(IOUContract::class.java.name, iou)

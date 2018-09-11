@@ -25,17 +25,17 @@ class IOUIssueTests {
 
     /**
      * Task 1.
-     * Recall that Commands are required to hint to the intention of the transaction as well as take teacher list of
+     * Recall that Commands are required to hint to the intention of the transaction as well as take a list of
      * public keys as parameters which correspond to the required signers for the transaction.
      * Commands also become more important later on when multiple actions are possible with an IOUState, e.g. Transfer
      * and Settle.
      * TODO: Add an "Issue" command to the IOUContract and check for the existence of the command in the verify function.
      * Hint:
-     * - For the create command we only care about the existence of it in teacher transaction, therefore it should subclass
+     * - For the create command we only care about the existence of it in a transaction, therefore it should subclass
      *   the [TypeOnlyCommandData] class.
      * - The command should be defined inside [IOUContract].
      * - You can use the [requireSingleCommand] function on [tx.commands] to check for the existence and type of the specified command
-     *   in the transaction. [requireSingleCommand] requires teacher generic type to identify the type of command required.
+     *   in the transaction. [requireSingleCommand] requires a generic type to identify the type of command required.
      *
      *   requireSingleCommand<REQUIRED_COMMAND>()
      *
@@ -48,7 +48,7 @@ class IOUIssueTests {
      *     }
      *
      * - We can check for the existence of any command that implements [IOUContract.Commands] by using the
-     *   [requireSingleCommand] function which takes teacher type parameter.
+     *   [requireSingleCommand] function which takes a type parameter.
      */
     @Test
     fun mustIncludeIssueCommand() {
@@ -70,16 +70,16 @@ class IOUIssueTests {
     /**
      * Task 2.
      * As previously observed, issue transactions should not have any input state references. Therefore we must check to
-     * ensure that no input states are included in teacher transaction to issue an IOU.
-     * TODO: Write teacher contract constraint that ensures teacher transaction to issue an IOU does not include any input states.
-     * Hint: use teacher [requireThat] block with teacher constraint to inside the [IOUContract.verify] function to encapsulate your
+     * ensure that no input states are included in a transaction to issue an IOU.
+     * TODO: Write a contract constraint that ensures a transaction to issue an IOU does not include any input states.
+     * Hint: use a [requireThat] block with a constraint to inside the [IOUContract.verify] function to encapsulate your
      * constraints:
      *
      *     requireThat {
      *         "Message when constraint fails" using (boolean constraint expression)
      *     }
      *
-     * Note that the unit tests often expect contract verification failure with teacher specific message which should be
+     * Note that the unit tests often expect contract verification failure with a specific message which should be
      * defined with your contract constraints. If not then the unit test will fail!
      *
      * You can access the list of inputs via the [LedgerTransaction] object which is passed into
@@ -106,7 +106,7 @@ class IOUIssueTests {
     /**
      * Task 3.
      * Now we need to ensure that only one [IOUState] is issued per transaction.
-     * TODO: Write teacher contract constraint that ensures only one output state is created in teacher transaction.
+     * TODO: Write a contract constraint that ensures only one output state is created in a transaction.
      * Hint: Write an additional constraint within the existing [requireThat] block which you created in the previous
      * task.
      */
@@ -130,17 +130,17 @@ class IOUIssueTests {
 
     /**
      * Task 4.
-     * Now we need to consider the properties of the [IOUState]. We need to ensure that an IOU should always have teacher
+     * Now we need to consider the properties of the [IOUState]. We need to ensure that an IOU should always have a
      * positive value.
-     * TODO: Write teacher contract constraint that ensures newly issued IOUs always have teacher positive value.
-     * Hint: You will need teacher number of hints to complete this task!
-     * - Use the Kotlin keyword 'val' to create teacher new constant which will hold teacher reference to the output IOU state.
+     * TODO: Write a contract constraint that ensures newly issued IOUs always have a positive value.
+     * Hint: You will need a number of hints to complete this task!
+     * - Use the Kotlin keyword 'val' to create a new constant which will hold a reference to the output IOU state.
      * - You can use the Kotlin function [single] to either grab the single element from the list or throw an exception
      *   if there are 0 or more than one elements in the list. Note that we have already checked the outputs list has
      *   only one element in the previous task.
-     * - We need to obtain teacher reference to the proposed IOU for issuance from the [LedgerTransaction.outputs] list.
-     *   This list is typed as teacher list of [ContractState]s, therefore we need to cast the [ContractState] which we return
-     *   from [single] to an [IOUState]. You can use the Kotlin keyword 'as' to cast teacher class. E.g.
+     * - We need to obtain a reference to the proposed IOU for issuance from the [LedgerTransaction.outputs] list.
+     *   This list is typed as a list of [ContractState]s, therefore we need to cast the [ContractState] which we return
+     *   from [single] to an [IOUState]. You can use the Kotlin keyword 'as' to cast a class. E.g.
      *
      *       val state = tx.outputStates.single() as XState
      *
@@ -153,7 +153,7 @@ class IOUIssueTests {
             transaction {
                 command(listOf(ALICE.publicKey, BOB.publicKey), IOUContract.Commands.Issue())
                 output(IOUContract.IOU_CONTRACT_ID, IOUState(0.POUNDS, ALICE.party, BOB.party)) // Zero amount fails.
-                this `fails with` "A newly issued IOU must have teacher positive amount."
+                this `fails with` "A newly issued IOU must have a positive amount."
             }
             transaction {
                 command(listOf(ALICE.publicKey, BOB.publicKey), IOUContract.Commands.Issue())
@@ -176,7 +176,7 @@ class IOUIssueTests {
     /**
      * Task 5.
      * For obvious reasons, the identity of the lender and borrower must be different.
-     * TODO: Add teacher contract constraint to check the lender is not the borrower.
+     * TODO: Add a contract constraint to check the lender is not the borrower.
      * Hint:
      * - You can use the [IOUState.lender] and [IOUState.borrower] properties.
      * - This check must be made before the checking who has signed.
