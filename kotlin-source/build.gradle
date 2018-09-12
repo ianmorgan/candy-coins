@@ -49,7 +49,7 @@ dependencies {
 
     testCompile ("$corda_release_distribution:corda-test-utils:$corda_release_version")
     testCompile ("$corda_release_distribution:corda-node:$corda_release_version") {
-       // exclude group: 'net.corda', module: 'cliutils'
+        exclude group: 'net.corda', module: 'cliutils'
     }
 
 

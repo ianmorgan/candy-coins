@@ -1,4 +1,0 @@
-
-# The teacher issues some kandy
-curl -X PUT 'http://localhost:10009/api/kandy/give-kandy?chocolates=1&gobstoppers=2&jellybeans=3&owner=O=Alice,L=New%20York,C=US'
-

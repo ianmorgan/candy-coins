@@ -1,2 +1,2 @@
 # Register a ServiceLoader service extending from net.corda.node.CordaPluginRegistry
-ianmorgan.kandykoins.plugin.KandyBagPlugin
+ianmorgan.candycoins.plugin.KandyBagPlugin
